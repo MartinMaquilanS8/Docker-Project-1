@@ -11,7 +11,7 @@ import studentRoutes from "./routes/student.routes.js";
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import { app, server } from "./socket/socket.js";
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 const __dirname = path.resolve();
 
@@ -20,20 +20,22 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 
+// Define API routes before the static file serving
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/student", studentRoutes);
 
+// Serve static files for the frontend
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
+// Catch-all route to serve the frontend app for any other route
 app.get("*", (req, res) => {
 	res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 
-
-
-server.listen(PORT,() => {
+// Start the server and connect to MongoDB
+server.listen(PORT, () => {
     connectToMongoDB();
-    console.log(`Server running on port ${PORT}`)
+    console.log(`Server running on port ${PORT}`);
 });

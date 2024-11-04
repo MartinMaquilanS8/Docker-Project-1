@@ -32,3 +32,30 @@ export const createStudent = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
+// Controller function for updating a student by studentID
+export const updateStudent = async (req, res) => {
+    const { id } = req.params;  // This is the studentID from the URL
+    const { studentName, course, presentDate } = req.body;
+
+    try {
+        // Find and update the student by studentID
+        const updatedStudent = await Student.findOneAndUpdate(
+            { studentID: id }, // Match by studentID
+            { studentName, course, presentDate },
+            { new: true }
+        );
+
+        if (!updatedStudent) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+
+        res.status(200).json({ 
+            message: "Student updated successfully", 
+            student: updatedStudent 
+        });
+    } catch (error) {
+        console.log("Error in updateStudent controller:", error.message);
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+};
