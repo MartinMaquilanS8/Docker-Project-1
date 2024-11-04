@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import studentRoutes from "./routes/student.routes.js";
 
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import { app, server } from "./socket/socket.js";
@@ -22,6 +23,12 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/student", studentRoutes);
+
+// Test route
+app.get("/test", (req, res) => {
+    res.send("Test route is working!");
+});
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
