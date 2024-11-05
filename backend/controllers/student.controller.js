@@ -38,6 +38,8 @@ export const updateStudent = async (req, res) => {
     const { id } = req.params;  // This is the studentID from the URL
     const { studentName, course, presentDate } = req.body;
 
+    console.log("updateStudent controller called for student ID:", id);
+
     try {
         // Find and update the student by studentID
         const updatedStudent = await Student.findOneAndUpdate(
@@ -47,9 +49,11 @@ export const updateStudent = async (req, res) => {
         );
 
         if (!updatedStudent) {
+            console.log("Student not found with ID:", id);
             return res.status(404).json({ message: "Student not found" });
         }
 
+        console.log("Student updated successfully:", updatedStudent);
         res.status(200).json({ 
             message: "Student updated successfully", 
             student: updatedStudent 

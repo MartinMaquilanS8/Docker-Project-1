@@ -7,11 +7,10 @@ const router = express.Router();
 router.post("/", createStudent);
 
 // PUT request to update a student by studentID
-router.put("/:id", updateStudent);
+router.put("/:id", (req, res, next) => {
+    console.log("PUT /api/student/:id endpoint hit with ID:", req.params.id);
+    next(); // Passes control to the updateStudent controller
+}, updateStudent);
 
-router.get("/:id", (req, res) => {
-    res.json({ Message: "GET request successful" });
-  });
-  
 
 export default router;
