@@ -33,33 +33,31 @@ export const createStudent = async (req, res) => {
     }
 };
 
-// Controller function for updating a student by studentID
+// In controllers/student.controller.js
+
+
 export const updateStudent = async (req, res) => {
-    const { id } = req.params;  // This is the studentID from the URL
-    const { studentName, course, presentDate } = req.body;
-
-    console.log("updateStudent controller called for student ID:", id);
-
     try {
-        // Find and update the student by studentID
-        const updatedStudent = await Student.findOneAndUpdate(
-            { studentID: id }, // Match by studentID
-            { studentName, course, presentDate },
+        const { studentID } = req.params;
+        const updates = req.body;
+
+        const student = await Student.findOneAndUpdate(
+            { studentID: studentID },
+            updates,
             { new: true }
         );
 
-        if (!updatedStudent) {
-            console.log("Student not found with ID:", id);
-            return res.status(404).json({ message: "Student not found" });
+        if (!student) {
+            return res.status(404).json({ error: "Student not found" });
         }
 
-        console.log("Student updated successfully:", updatedStudent);
-        res.status(200).json({ 
-            message: "Student updated successfully", 
-            student: updatedStudent 
+        res.status(200).json({
+            message: "Student updated successfully",
+            student: student
         });
+
     } catch (error) {
-        console.log("Error in updateStudent controller:", error.message);
-        res.status(500).json({ message: "Internal server error", error: error.message });
+        console.error("Error in updateStudent controller:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };

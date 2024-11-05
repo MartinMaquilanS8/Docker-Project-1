@@ -1,16 +1,13 @@
 import express from "express";
-import { createStudent, updateStudent } from "../controllers/student.controller.js";
+import { updateStudent } from "../controllers/student.controller.js";
 
 const router = express.Router();
 
-// POST request to create a student
-router.post("/", createStudent);
+router.put('/students/:studentID', updateStudent);
 
-// PUT request to update a student by studentID
-router.put("/:id", (req, res, next) => {
-    console.log("PUT /api/student/:id endpoint hit with ID:", req.params.id);
-    next(); // Passes control to the updateStudent controller
-}, updateStudent);
-
+// Test route
+router.get('/students/test', (req, res) => {
+    res.json({ message: "Test route working" });
+});
 
 export default router;

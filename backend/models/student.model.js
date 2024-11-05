@@ -15,7 +15,7 @@ const studentSchema = new mongoose.Schema({
         required: true
     },
     presentDate: {
-        type: String,
+        type: Date,
         required: true
     }
 }, { timestamps: true });

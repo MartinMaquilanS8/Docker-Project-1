@@ -20,23 +20,11 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 
-// Define API routes before the static file serving
-// app.use("/api/auth", authRoutes);
-// app.use("/api/messages", messageRoutes);
-// app.use("/api/users", userRoutes);
-// app.use("/api/student", studentRoutes);
-
 app.use("/api/auth", authRoutes);
-console.log("Auth routes loaded");
-
 app.use("/api/messages", messageRoutes);
-console.log("Message routes loaded");
-
 app.use("/api/users", userRoutes);
-console.log("User routes loaded");
-
 app.use("/api/student", studentRoutes);
-console.log("Student routes loaded");
+
 
 
 // Serve static files for the frontend
