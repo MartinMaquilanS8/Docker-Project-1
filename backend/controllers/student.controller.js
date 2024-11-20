@@ -61,3 +61,23 @@ export const updateStudent = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+// In backend/controllers/student.controller.js
+
+export const deleteStudent = async (req, res) => {
+    try {
+        const { studentID } = req.params;
+
+        const deletedStudent = await Student.findOneAndDelete({ studentID });
+
+        if (!deletedStudent) {
+            return res.status(404).json({ error: "Student not exists" }); // Update this message
+        }
+
+        res.status(200).json({ message: "Student deleted successfully" });
+
+    } catch (error) {
+        console.error("Error in deleteStudent controller:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
